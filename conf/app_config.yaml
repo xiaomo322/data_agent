@@ -1,0 +1,49 @@
+logging:
+  file:
+    enable: true
+    level: INFO
+    path: logs
+    rotation: "10 MB"
+    retention: "7 days"
+  console:
+    enable: true
+    level: INFO
+
+db_meta:
+  host: ${oc.env:DATA_AGENT_META_DB_HOST,localhost}
+  port: ${oc.env:DATA_AGENT_META_DB_PORT,3306}
+  user: ${oc.env:MYSQL_USER,data_agent}
+  password: ${oc.env:MYSQL_PASSWORD,change-me}
+  database: meta
+
+db_dw:
+  host: ${oc.env:DATA_AGENT_DW_DB_HOST,localhost}
+  port: ${oc.env:DATA_AGENT_DW_DB_PORT,3306}
+  user: ${oc.env:MYSQL_USER,data_agent}
+  password: ${oc.env:MYSQL_PASSWORD,change-me}
+  database: dw
+
+qdrant:
+  host: ${oc.env:DATA_AGENT_QDRANT_HOST,localhost}
+  port: ${oc.env:DATA_AGENT_QDRANT_PORT,6333}
+  embedding_size: 1024
+
+embedding:
+  host: ${oc.env:DATA_AGENT_EMBEDDING_HOST,localhost}
+  port: ${oc.env:DATA_AGENT_EMBEDDING_PORT,8081}
+  model: BAAI/bge-large-zh-v1.5
+
+es:
+  host: ${oc.env:DATA_AGENT_ES_HOST,localhost}
+  port: ${oc.env:DATA_AGENT_ES_PORT,9200}
+  index_name: data_agent
+
+text_llm:
+  model_name: ${oc.env:DATA_AGENT_TEXT_LLM_MODEL,deepseek-chat}
+  api_key: ${oc.env:DATA_AGENT_TEXT_LLM_API_KEY,}
+  base_url: ${oc.env:DATA_AGENT_TEXT_LLM_BASE_URL,https://api.deepseek.com}
+
+code_llm:
+  model_name: ${oc.env:DATA_AGENT_CODE_LLM_MODEL,deepseek-chat}
+  api_key: ${oc.env:DATA_AGENT_CODE_LLM_API_KEY,}
+  base_url: ${oc.env:DATA_AGENT_CODE_LLM_BASE_URL,https://api.deepseek.com}

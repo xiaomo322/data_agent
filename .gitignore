@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+.python-version
+.pytest_cache/
+.mypy_cache/
+
+# Runtime configuration and logs
+.env
+conf/.env
+logs/
+*.log
+
+# Local infrastructure data and models
+docker/embedding/
+docker/**/data/
+*.bin
+*.safetensors
+
+# Frontend
+agent-fronted/node_modules/
+agent-fronted/dist/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
