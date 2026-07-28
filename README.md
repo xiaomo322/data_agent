@@ -126,7 +126,5 @@ prompts/          # SQL 生成、修复和筛选提示词
 - 请始终通过环境变量提供数据库密码和 LLM API Key。
 - 执行生产数据库前，应增加只读账号、SQL 白名单和资源限额；本项目的示例数据仅用于本地演示。
 
-## 简历描述（可直接使用）
 
-> 基于 LangGraph 构建 NL2SQL 智能问数系统：通过 Qdrant 向量检索、Elasticsearch 全文检索与 LLM 重排序召回企业元数据，设计“SQL 生成 - EXPLAIN 预检 - 执行验证 - 错误回写”的自校正闭环；以 FastAPI + SSE 输出工作流事件，并通过 Docker Compose 编排 MySQL、Qdrant、Elasticsearch 和 Embedding 服务。
 
