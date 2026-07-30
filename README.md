@@ -24,6 +24,8 @@
 
 下面预留了运行截图位置。完成本地启动后，建议把图片放到 `docs/images/`，再替换对应路径，这样 GitHub 首页会更有说服力。
 
+完整演示步骤见 [docs/demo.md](docs/demo.md)。
+
 | 展示项 | 建议文件 | 状态 |
 | --- | --- | --- |
 | 前端问数页面 | `docs/images/frontend-query.png` | 待补充 |
