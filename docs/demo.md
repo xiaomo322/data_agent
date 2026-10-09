@@ -109,15 +109,13 @@ curl -N -X POST http://127.0.0.1:8000/api/query `
 - 后端通过 SSE 连续返回事件。
 - 最终返回表格结果或明确的错误信息。
 
-## 7. 截图建议
+## 7. 已收录的运行证据
 
-建议补充以下截图到 `docs/images/`：
-
-| 截图 | 文件名 | 内容 |
+| 截图 | 文件 | 展示内容 |
 | --- | --- | --- |
-| 前端问数页面 | `frontend-query.png` | 输入自然语言问题后的完整页面 |
-| SSE 执行过程 | `sse-stream.png` | 浏览器 Network、终端 curl 或页面步骤流 |
-| 查询结果表格 | `query-result.png` | 最终返回的数据表格 |
-| OpenAPI 文档 | `openapi-docs.png` | `http://127.0.0.1:8000/docs` 页面 |
+| 系统首页 | [`01-home.png`](images/01-home.png) | 智能问数入口与示例问题 |
+| 前端运行结果 | [`02-query-result.png`](images/02-query-result.png) | Agent 执行步骤与分类销售额结果表格 |
+| GMV 执行链路 | [`03-gmv-trace.png`](images/03-gmv-trace.png) | 召回、筛选、SQL 生成、校验与执行日志 |
+| 分类销售额链路 | [`04-category-trace.png`](images/04-category-trace.png) | 多表 JOIN 和 `GROUP BY` 查询的完整后端记录 |
 
-截图补齐后，可以回到 README 取消“运行结果”区域中的图片注释。
+截图与日志仅展示本地模拟数据，不包含 API Key、数据库密码或真实业务数据。

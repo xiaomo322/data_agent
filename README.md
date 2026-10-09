@@ -1,4 +1,4 @@
-# Data Agent
+# 掌柜问数 Data Agent
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-SSE-009688?logo=fastapi&logoColor=white)
@@ -6,48 +6,49 @@
 ![Vue](https://img.shields.io/badge/Vue-3-42B883?logo=vuedotjs&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 
-面向企业数据仓库的 NL2SQL 智能问数系统。用户用自然语言提出问题，系统会检索表、字段、指标和维度值等元数据，生成 SQL，并通过预检、执行、错误回写完成自校正，最后用 SSE 将执行过程和查询结果流式返回前端。
+面向数据仓库场景的 NL2SQL 智能问数系统。用户使用自然语言提问，系统检索表、字段、指标和维度值等元数据，生成并校验 SQL，最后通过 SSE 将 Agent 执行过程和查询结果流式返回前端。
 
-这个项目重点展示的是 LLM 应用工程能力：检索增强、Agent 工作流编排、SQL 风险控制、流式交互和可观测执行链路，而不是让模型直接“猜”SQL。
+项目重点展示 LLM 应用工程能力：检索增强、Agent 工作流编排、SQL 预检、流式交互和请求级可观测，而不是让模型脱离真实 Schema 直接“猜” SQL。
 
 ## 项目亮点
 
-| 能力 | 实现方式 | 价值 |
+| 问题 | 解决方法 | 效果 |
 | --- | --- | --- |
-| 自然语言问数 | FastAPI + LangGraph 编排 NL2SQL 工作流 | 降低业务人员查询数据的使用门槛 |
-| 元数据增强 | Qdrant 语义召回 + Elasticsearch 维度值召回 | 让模型基于真实表结构、指标口径和维度值生成 SQL |
-| SQL 自校正 | `EXPLAIN` 预检、执行错误回写、二次修复 | 降低表名、字段名、语法和口径幻觉 |
-| 流式反馈 | SSE 推送节点进度、SQL、结果和错误信息 | 前端可展示完整执行过程，便于调试和面试演示 |
-| 本地可运行 | Docker Compose 编排 MySQL、ES、Qdrant、Embedding 服务 | 便于复现项目，不依赖线上数据库 |
+| 业务人员不了解数据库结构和 SQL | 用 FastAPI + LangGraph 编排 NL2SQL 工作流 | 实现从自然语言提问到结构化查询结果的端到端闭环 |
+| 业务语言与物理字段、指标口径和真实维度值存在语义差异 | 用 Qdrant 召回字段与指标，用 Elasticsearch 检索维度值 | 为 SQL 生成提供真实且可追溯的 Schema 上下文，降低字段臆造与条件错配风险 |
+| 全量 Schema 上下文冗余，容易干扰复杂查询 | 并行执行字段、指标和字段值三路召回，再进行合并与二次筛选 | 缩小 SQL 生成的候选范围，同时保留 JOIN 所需的主外键关系 |
+| 模型生成的 SQL 可能存在语法或方言问题 | 注入 MySQL 方言、版本与日期上下文，并用 `EXPLAIN` 进行执行前校验 | 在真正查询前发现可解析的 SQL 错误，为校验失败后的一次纠错提供错误上下文 |
+| Agent 执行时用户无法感知中间状态 | 用 SSE 流式推送节点进度和查询结果 | 前端可视化展示召回、筛选、SQL 生成、校验与执行过程 |
 
 ## 运行结果
 
-下面预留了运行截图位置。完成本地启动后，建议把图片放到 `docs/images/`，再替换对应路径，这样 GitHub 首页会更有说服力。
-
 完整演示步骤见 [docs/demo.md](docs/demo.md)。
 
-| 展示项 | 建议文件 | 状态 |
-| --- | --- | --- |
-| 前端问数页面 | `docs/images/frontend-query.png` | 待补充 |
-| Agent 执行过程 / SSE 事件流 | `docs/images/sse-stream.png` | 待补充 |
-| 查询结果表格 | `docs/images/query-result.png` | 待补充 |
-| OpenAPI 文档或健康检查 | `docs/images/openapi-docs.png` | 待补充 |
+### 首页与问数入口
 
-<!--
-截图补充后可以取消下面注释：
+<p align="center">
+  <img src="docs/images/01-home.png" alt="掌柜问数首页" width="820">
+</p>
 
-### 前端问数页面
+### Agent 执行过程与查询结果
 
-![前端问数页面](docs/images/frontend-query.png)
+演示问题：**统计广东地区各类商品的销售总额**。页面逐步展示关键词抽取、字段/指标/字段值召回、上下文合并、SQL 生成、预检和执行，最后返回分类汇总结果。
 
-### SSE 执行过程
+<p align="center">
+  <img src="docs/images/02-query-result.png" alt="Agent 执行过程与查询结果" width="820">
+</p>
 
-![SSE 执行过程](docs/images/sse-stream.png)
+### 后端执行链路
 
-### 查询结果
+下图展示两类真实运行样例：广东地区 GMV 汇总，以及广东地区各商品类别销售额统计。日志可跟踪召回内容、候选表与指标、生成 SQL、`EXPLAIN` 校验和最终查询结果。
 
-![查询结果](docs/images/query-result.png)
--->
+<p align="center">
+  <img src="docs/images/03-gmv-trace.png" alt="广东地区 GMV 查询执行链路" width="900">
+</p>
+
+<p align="center">
+  <img src="docs/images/04-category-trace.png" alt="广东地区各类商品销售额执行链路" width="900">
+</p>
 
 ## 工作流
 
@@ -65,10 +66,10 @@
                          ▼
           SQL 生成 → EXPLAIN 预检 → 执行
                          │              │
-                         └── 错误上下文回灌 ──► SQL 修复
-                                               │
-                                               ▼
-                                      SSE 流式返回前端
+                         └── 校验失败 ──► SQL 纠错 ──┘
+                                        │
+                                        ▼
+                               SSE 流式返回前端
 ```
 
 ## 技术栈
