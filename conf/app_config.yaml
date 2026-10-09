@@ -40,10 +40,10 @@ es:
 
 text_llm:
   model_name: ${oc.env:DATA_AGENT_TEXT_LLM_MODEL,deepseek-chat}
-  api_key: ${oc.env:DATA_AGENT_TEXT_LLM_API_KEY,}
+  api_key: ${oc.env:DATA_AGENT_TEXT_LLM_API_KEY,''}
   base_url: ${oc.env:DATA_AGENT_TEXT_LLM_BASE_URL,https://api.deepseek.com}
 
 code_llm:
   model_name: ${oc.env:DATA_AGENT_CODE_LLM_MODEL,deepseek-chat}
-  api_key: ${oc.env:DATA_AGENT_CODE_LLM_API_KEY,}
+  api_key: ${oc.env:DATA_AGENT_CODE_LLM_API_KEY,''}
   base_url: ${oc.env:DATA_AGENT_CODE_LLM_BASE_URL,https://api.deepseek.com}
