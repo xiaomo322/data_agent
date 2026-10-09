@@ -79,6 +79,24 @@ class ReadOnlySQLTests(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual([], session.statements)
 
+    async def test_server_file_reads_are_rejected(self):
+        session = FakeSession()
+        repository = DWMySQLRepository(session)
+
+        with self.assertRaisesRegex(ValueError, "read-only"):
+            await repository.run_sql("SELECT LOAD_FILE('/etc/passwd')")
+
+        self.assertEqual([], session.statements)
+
+    async def test_session_variable_assignment_is_rejected(self):
+        session = FakeSession()
+        repository = DWMySQLRepository(session)
+
+        with self.assertRaisesRegex(ValueError, "read-only"):
+            await repository.run_sql("SELECT @row_count := COUNT(*) FROM fact_order")
+
+        self.assertEqual([], session.statements)
+
     async def test_forbidden_words_inside_string_literals_are_allowed(self):
         session = FakeSession()
         repository = DWMySQLRepository(session)

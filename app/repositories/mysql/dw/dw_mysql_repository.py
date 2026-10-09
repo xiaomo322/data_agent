@@ -17,6 +17,7 @@ _FORBIDDEN_SQL_TOKENS = {
     "INSERT",
     "INTO",
     "LOAD",
+    "LOAD_FILE",
     "LOCK",
     "RENAME",
     "REPLACE",
@@ -97,6 +98,8 @@ def ensure_read_only_sql(sql: str) -> None:
 
     tokens = set(re.findall(r"[A-Za-z_]+", masked_sql.upper()))
     if tokens & _FORBIDDEN_SQL_TOKENS:
+        raise ValueError("Only read-only SELECT queries are allowed")
+    if ":=" in masked_sql:
         raise ValueError("Only read-only SELECT queries are allowed")
 
 
