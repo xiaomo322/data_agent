@@ -13,8 +13,6 @@ async def validate_sql(state:DataAgentState,runtime:Runtime[DataAgentContext]):
 
     dw_mysql_repository = runtime.context["dw_mysql_repository"]
 
-    await dw_mysql_repository.validate_sql(sql)
-
     try:
         await dw_mysql_repository.validate_sql(sql)
         logger.info("SQL验证成功")

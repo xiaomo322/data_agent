@@ -32,7 +32,7 @@ async def correct_sql(state:DataAgentState,runtime:Runtime[DataAgentContext]):
                                   "table_infos": yaml.dump(table_infos, allow_unicode=True, sort_keys=False),
                                   "metric_infos": yaml.dump(metric_infos, allow_unicode=True, sort_keys=False),
                                   "date_info": yaml.dump(date_info, allow_unicode=True, sort_keys=False),
-                                  "db_info": yaml.dump(),
+                                  "db_info": yaml.dump(db_info, allow_unicode=True, sort_keys=False),
                                   "sql": sql,
                                   "error": error
     })

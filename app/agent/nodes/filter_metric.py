@@ -29,7 +29,7 @@ async def filter_metric(state:DataAgentState,runtime:Runtime[DataAgentContext]):
 
     logger.info(f"过滤后的指标信息：{list(map(lambda x:x['name'],filter_metric_infos))}")
 
-    return {"filter_metric_infos": filter_metric_infos}
+    return {"metric_infos": filter_metric_infos}
 
 
 

@@ -33,4 +33,4 @@ async def filter_table(state:DataAgentState,runtime:Runtime[DataAgentContext]):
             filter_table_infos.append(table_info)
     logger.info(f"过滤后的表信息：{list(map(lambda x:x['name'],filter_table_infos))}")
 
-    return {"filter_table_infos": filter_table_infos}
+    return {"table_infos": filter_table_infos}
